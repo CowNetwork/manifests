@@ -1,0 +1,26 @@
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: Kafka
+metadata:
+  name: mars-kafka
+  namespace: kafka
+spec:
+  kafka:
+    version: 2.7.0
+    replicas: 1
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+    config:
+      offset.topic.replication.factor: 1
+      inter.broker.protocol.version: "2.7"
+      log.message.format.version: "2.7"
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 1
+    storage:
+      type: ephemeral
+    
