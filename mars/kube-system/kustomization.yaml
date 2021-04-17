@@ -1,7 +1,6 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: kafka
+namespace: kube-system
 resources:
-  - kafka.namespace.yaml
-  - strimzi.manifests.yaml
+  - hcloud-csi.manifests.yaml
