@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: service
+          image: ghcr.io/cownetwork/user-service:v0.15.12
+          env:
+            - name: PORT
+              value: "9111"
+            - name: USER_SERVICE_POSTGRES_HOST
+              value: postgres-0.postgres.database.svc.cluster.local
+            - name: USER_SERVICE_POSTGRES_SCHEMA
+              value: user-service
+            - name: USER_SERVICE_POSTGRES_DB
+              value: cow
+            - name: USER_SERVICE_CLOUD_EVENT_SOURCE
+              value: cow.global.user-service
+            - name: USER_SERVICE_KAFKA_BROKERS
+              value: mars-kafka-kafka-0.mars-kafka-kafka-brokers.kafka.svc.cluster.local:9092
+          ports:
+            - containerPort: 9111
