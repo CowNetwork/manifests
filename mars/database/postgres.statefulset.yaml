@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: "postgres"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: postgres
+        image: postgres:13
+        env:
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_DB
+            value: cow
+          - name: POSTGRES_PASSWORD
+            value: udder
+          - name: POSTGRES_HOST_AUTH_METHOD
+            value: trust
+        ports:
+          - containerPort: 5432
+        volumeMounts:
+          - name: pgdata
+            mountPath: /var/lib/postgresql/data/
+  volumeClaimTemplates:
+    - metadata:
+        name: pgdata
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "hcloud-volumes"
+        resources:
+          requests:
+            storage: 10Gi

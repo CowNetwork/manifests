@@ -19,6 +19,7 @@ metadata:
 provisioner: csi.hetzner.cloud
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
+reclaimPolicy: Retain # EXPLICITLY SET TO RETAIN
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -162,7 +163,7 @@ spec:
             - name: HCLOUD_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: hcloud-csi
+                  name: hcloud
                   key: token
           volumeMounts:
             - name: socket-dir
@@ -262,7 +263,7 @@ spec:
             - name: HCLOUD_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: hcloud-csi
+                  name: hcloud
                   key: token
             - name: KUBE_NODE_NAME
               valueFrom:
