@@ -4,5 +4,7 @@ kind: Kustomization
 namespace: backend
 resources:
   - backend.namespace.yaml
-  - user-service.deployment.yaml
-  - user-service.service.yaml
+    #  - user-service.deployment.yaml
+    #  - user-service.service.yaml
+  - indigo.deployment.yaml
+  - indigo.service.yaml

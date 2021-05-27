@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lobby
+  labels:
+    app: lobby
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lobby
+  template:
+    metadata:
+      labels:
+        app: lobby
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: service
+          imagePullPolicy: Always
+          image: ghcr.io/cownetwork/lobby:v0.21.1
+          ports:
+            - containerPort: 25565

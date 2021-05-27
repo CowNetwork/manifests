@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: indigo-service
+  labels:
+    app: indigo-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: indigo-service
+  template:
+    metadata:
+      labels:
+        app: indigo-service
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: service
+          image: ghcr.io/cownetwork/indigo:v0.19.1
+          env:
+            - name: INDIGO_SERVICE_PORT
+              value: "9111"
+            - name: INDIGO_SERVICE_POSTGRES_URL
+              value: postgres-0.postgres.database.svc.cluster.local
+            - name: INDIGO_SERVICE_POSTGRES_USER
+              value: postgres
+            - name: INDIGO_SERVICE_POSTGRES_PASSWORD
+              value: ""
+            - name: INDIGO_SERVICE_POSTGRES_SCHEMA
+              value: indigo
+            - name: INDIGO_SERVICE_POSTGRES_DB
+              value: cow
+            - name: INDIGO_SERVICE_KAFKA_BROKERS
+              value: mars-kafka-kafka-0.mars-kafka-kafka-brokers.kafka.svc.cluster.local:9092,mars-kafka-kafka-1.mars-kafka-kafka-brokers.kafka.svc.cluster.local:9092,mars-kafka-kafka-2.mars-kafka-kafka-brokers.kafka.svc.cluster.local:9092
+          ports:
+            - containerPort: 9111

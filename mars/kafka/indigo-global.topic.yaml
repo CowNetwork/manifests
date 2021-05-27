@@ -1,8 +1,8 @@
 ---
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: lol-topic
+  name: cow.global.indigo
   namespace: kafka
   labels:
     strimzi.io/cluster: mars-kafka

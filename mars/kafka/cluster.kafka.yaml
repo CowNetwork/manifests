@@ -1,13 +1,13 @@
 ---
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: mars-kafka
   namespace: kafka
 spec:
   kafka:
-    version: 2.7.0
-    replicas: 1
+    version: 2.8.0
+    replicas: 3
     listeners:
       - name: plain
         port: 9092
@@ -19,8 +19,32 @@ spec:
       log.message.format.version: "2.7"
     storage:
       type: ephemeral
+    resources:
+      requests:
+        memory: 2Gi
+      limits:
+        memory: 2Gi
   zookeeper:
-    replicas: 1
+    replicas: 3
     storage:
       type: ephemeral
-    
+    resources:
+      requests:
+        memory: 512Mi
+      limits:
+        memory: 512Mi
+  entityOperator: 
+    topicOperator:
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: "1"
+          memory: 512Mi 
+      watchedNamespace: kafka
+      reconciliationIntervalSeconds: 60
+      logging:
+        type: inline
+        loggers:
+          rootLogger.level: "INFO"
