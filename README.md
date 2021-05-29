@@ -15,5 +15,7 @@ manifests
 ```
 
 **Important things to note**
-* You have to manually set `reclaimPolicy` to `Retain` on the `hcloud-csi`
-* You have to rename the secret `hcloud-csi` uses to `hcloud`, because this secret is alerady present on the cluster
+* I manually set `reclaimPolicy` to `Retain` on the `hcloud-csi`
+* I renamed the secret `hcloud-csi` uses to `hcloud`, because this secret is alerady present on the cluster
+* I explicitly set `nodePort: 30443` for https and `nodePort: 30080` for http traffic 
+  in order to have fixed ports on every worker node to make configuring the hcloud loadbalancer easier 
