@@ -4,5 +4,9 @@ kind: Kustomization
 namespace: minecraft
 resources:
   - minecraft.namespace.yaml
+  - server-icon.configmap.yaml
+  - velocity.configmap.yaml
+  - velocity.deployment.yaml
+  - velocity.service.yaml
   - lobby.deployment.yaml
   - lobby.service.yaml
