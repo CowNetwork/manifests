@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+spec:
+  serviceName: redis
+  selector:
+    matchLabels:
+      app: redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: redis-config
+            items:
+              - key: redis.conf
+                path: redis.conf
+      containers:
+        - name: redis
+          image: redis:6.2.3-alpine
+          command: ['redis-server', '/etc/redis/redis.conf']
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: redis-data
+              mountPath: /var/lib/redis
+            - name: config
+              mountPath: /etc/redis
+          resources:
+            requests:
+              memory: 1Gi
+            limits:
+              memory: 1Gi
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-data
+      spec:
+        accessModes: ['ReadWriteOnce']
+        storageClassName: hcloud-volumes
+        resources:
+          requests:
+            storage: 10Gi

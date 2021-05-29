@@ -23,7 +23,7 @@ spec:
             - name: INDIGO_SERVICE_PORT
               value: "9111"
             - name: INDIGO_SERVICE_POSTGRES_URL
-              value: postgres-0.postgres.database.svc.cluster.local
+              value: postgres-0.postgres.storage.svc.cluster.local
             - name: INDIGO_SERVICE_POSTGRES_USER
               value: postgres
             - name: INDIGO_SERVICE_POSTGRES_PASSWORD
