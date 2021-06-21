@@ -19,6 +19,6 @@ spec:
       containers:
         - name: service
           imagePullPolicy: Always
-          image: ghcr.io/cownetwork/lobby:v0.24.6
+          image: ghcr.io/cownetwork/lobby:v0.25.3
           ports:
             - containerPort: 25565
