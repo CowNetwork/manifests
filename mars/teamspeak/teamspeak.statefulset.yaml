@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: teamspeak
+spec:
+  selector:
+    matchLabels:
+      app: teamspeak
+  serviceName: teamspeak
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: teamspeak
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: teamspeak
+        image: teamspeak:3.13
+        env:
+          - name: TS3SERVER_LICENSE
+            value: accept
+        ports:
+          - containerPort: 9987
+        volumeMounts:
+          - name: teamspeakdata
+            mountPath: /var/ts3server/
+  volumeClaimTemplates:
+    - metadata:
+        name: teamspeakdata
+      spec:
+        accessModes: ['ReadWriteOnce']
+        storageClassName: hcloud-volumes
+        resources:
+          requests:
+            storage: 10Gi
