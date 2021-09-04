@@ -10,3 +10,5 @@ resources:
   - velocity.service.yaml
   - lobby.deployment.yaml
   - lobby.service.yaml
+  - pixlers.deployment.yaml
+  - pixlers.service.yaml

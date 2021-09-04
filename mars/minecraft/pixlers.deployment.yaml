@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pixlers
+  labels:
+    app: pixlers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pixlers
+  template:
+    metadata:
+      labels:
+        app: pixlers
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: pixlers
+          imagePullPolicy: Always
+          image: ghcr.io/cownetwork/pixlers:v0.35.7
+          ports:
+            - containerPort: 25565

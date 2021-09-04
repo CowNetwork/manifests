@@ -69,6 +69,7 @@ data:
 
     [servers]
       lobby = "lobby.minecraft.svc.cluster.local:25565"
+      pixlers = "pixlers.minecraft.svc.cluster.local:25565"
       try = ["lobby"]
     
     [forced-hosts]
